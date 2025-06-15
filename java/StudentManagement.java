@@ -1,66 +1,60 @@
 package basic;
+import java.util.Scanner;
 
-	import java.util.Scanner;
+class Student {
+    private String name;
+    private int rollNumber;
+    private int[] marks = new int[3]; // marks for 3 subjects
+    private int total;
+    private double average;
 
-	class Student {
-	    String name;
-	    int rollNo;
-	    String course;
-	    double marks;
+    // Method to input student details
+    public void inputDetails(Scanner scanner) {
+        System.out.print("Enter student name: ");
+        name = scanner.nextLine();
 
-	    Student(String name, int rollNo, String course, double marks) {
-	        this.name = name;
-	        this.rollNo = rollNo;
-	        this.course = course;
-	        this.marks = marks;
-	    }
+        System.out.print("Enter roll number: ");
+        rollNumber = scanner.nextInt();
 
-	    void displayStudent() {
-	        System.out.println("Name   : " + name);
-	        System.out.println("Roll No: " + rollNo);
-	        System.out.println("Course : " + course);
-	        System.out.println("Marks  : " + marks);
-	        System.out.println("---------------------------");
-	    }
-	}
+        // Input marks for 3 subjects
+        total = 0;
+        for (int i = 0; i < 3; i++) {
+            System.out.print("Enter marks for subject " + (i + 1) + ": ");
+            marks[i] = scanner.nextInt();
+            total += marks[i];
+        }
+        average = total / 3.0;
+        scanner.nextLine(); // consume leftover newline
+    }
 
-	public class StudentManagement {
-	    public static void main(String[] args) {
-	        Scanner sc = new Scanner(System.in);
+    // Method to display student result
+    public void displayResult() {
+        System.out.println("\n--- Student Result ---");
+        System.out.println("Name        : " + name);
+        System.out.println("Roll Number : " + rollNumber);
+        System.out.println("Marks       : ");
+        for (int i = 0; i < 3; i++) {
+            System.out.println("  Subject " + (i + 1) + ": " + marks[i]);
+        }
+        System.out.println("Total Marks : " + total);
+        System.out.println("Average     : " + String.format("%.2f", average));
+    }
+}
 
-	        System.out.print("How many students do you want to add? ");
-	        int n = sc.nextInt();
-	        sc.nextLine(); // Consume newline
+public class StudentManagement {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-	        Student[] students = new Student[n];
+        // Create Student object
+        Student student = new Student();
 
-	        for (int i = 0; i < n; i++) {
-	            System.out.println("\nEnter details for Student " + (i + 1));
-	            System.out.print("Name: ");
-	            String name = sc.nextLine();
+        // Get input from user
+        student.inputDetails(scanner);
 
-	            System.out.print("Roll No: ");
-	            int rollNo = sc.nextInt();
-	            sc.nextLine(); // Consume newline
+        // Display result
+        student.displayResult();
 
-	            System.out.print("Course: ");
-	            String course = sc.nextLine();
-
-	            System.out.print("Marks: ");
-	            double marks = sc.nextDouble();
-	            sc.nextLine(); // Consume newline
-
-	            students[i] = new Student(name, rollNo, course, marks);
-	        }
-
-	        // Display all students
-	        System.out.println("\n--- Student Details ---");
-	        for (Student s : students) {
-	            s.displayStudent();
-	        }
-
-	        sc.close();
-	    }
-	}
-
+        scanner.close();
+    }
+}
 
